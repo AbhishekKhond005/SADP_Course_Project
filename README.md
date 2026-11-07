@@ -1,8 +1,19 @@
 # Patient card and connected care: an architecture study
 
-This README is my proposed architecture for the system described in [the architecture drivers PDF](CSE752-2026-17-ArchDrivers.pdf). It is a learning exercise, not an implementation. I have used patterns we study in software architecture to ask a practical question: **where should each responsibility live, and how can the modules cooperate without losing control of patient data?**
+## About the project
 
-The PDF identifies ten features in six modules. I keep its module boundaries and use the same IDs throughout. Each diagram's `M1`–`M6` boxes are **connection points** to the diagrams with those headings; arrow labels name the information or request crossing the boundary. Components inside a module are proposed design choices, not requirements stated verbatim in the PDF.
+This course project explores a connected healthcare system where a patient can use one identity and card across facilities. Staff can register patients, book visits, provide care, and access records from another facility when the patient permits it. Detailed clinical and billing records stay at the facility that created them, while shared services coordinate identity, consent, and record discovery.
+
+### The six modules
+
+- **M1 — Identity & Access:** Gives each patient a unique ID and manages login and card credentials.
+- **M2 — Trust & Data Exchange:** Checks consent and helps facilities share permitted records securely.
+- **M3 — Open Ecosystem:** Provides open specifications, developer tools, and support for working offline.
+- **M4 — Access to Care:** Handles patient registration, cards, appointments, and check-in.
+- **M5 — Clinical Care:** Supports consultations, lab work, prescriptions, and clinical records at each facility.
+- **M6 — Engagement & Operations:** Handles patient updates, follow-ups, billing, and facility administration.
+
+This README is my proposed architecture based on [the architecture drivers PDF](CSE752-2026-17-ArchDrivers.pdf). It is a learning exercise, not an implementation. I use the PDF's module boundaries to explore where responsibilities belong and how the modules work together. Each diagram's `M1`–`M6` boxes are **connection points** to the diagrams with those headings; arrow labels name the information or request crossing the boundary. Components inside a module are proposed design choices, not requirements stated verbatim in the PDF.
 
 ## The system at a glance
 
