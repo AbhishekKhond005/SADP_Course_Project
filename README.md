@@ -202,7 +202,7 @@ sequenceDiagram
     participant Origin as Originating facility
     participant M6 as M6 Engagement & Operations
     Patient->>M4: Book and arrive with card
-    M4->>M1: Resolve UPID; validate current card status
+    M4->>M1: Resolve UPID and validate current card status
     M1-->>M4: Identity / credential decision
     M4->>M5: Checked-in visit
     M5->>M1: Authenticate clinician
@@ -215,12 +215,8 @@ sequenceDiagram
     M5->>M5: Record care in facility store
     M5->>M2: Publish allowed summary / pointer
     M5-->>M6: VisitCompleted / FollowUpNeeded event
-    M6->>M6: Produce local bill; queue minimal reminder
+    M6->>M6: Produce local bill and queue minimal reminder
     M6-->>Patient: Reminder or dashboard update
 ```
 
 M3 does not appear as a runtime participant in this sequence because its main contribution is the contract each participant implements. When connectivity is poor, its embedded sync agent queues eligible local operations; it does not replace M1's revocation check or M2's live consent decision.
-
-## What I would validate before implementing
-
-The diagrams are a design hypothesis. I would test the hardest drivers first: immediate card revocation across facilities; duplicate identity review; consent changes during a cross-facility request; no clinical content in the locator; double-booking under concurrent requests; retrying queued work without duplicate actions; and clinical usability during a shared-service outage. Those experiments would tell us whether these proposed boundaries and patterns actually satisfy the PDF's security and scalability goals.
