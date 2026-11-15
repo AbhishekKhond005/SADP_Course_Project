@@ -58,6 +58,10 @@ functions, layered responsibilities, invocation rules, dependency table, and
 architecture-principle mapping is in
 [Functional Modules](functional-modules.md).
 
+For the solution purpose, scope, stakeholders, architecture summary, patient
+journey, and key assumptions, see the
+[Project Overview](project-overview.md).
+
 ## M1 — Identity & Access
 
 I would separate identity rules from card hardware using **ports and adapters**. A reader translates QR, RFID, NFC or manual input into the same credential lookup. The UPID is an opaque identifier; the card carries a revocable credential, not a clinical record. Duplicate matching produces a *review candidate*, not an automatic merge.
