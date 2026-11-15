@@ -53,6 +53,11 @@ The solid arrows are runtime interactions. The dotted arrows are mostly build-ti
 | M5 Clinical Care | F8 | Local clinical workflow with federated reads | Facility clinical records and care actions |
 | M6 Engagement & Operations | F9, F10 | Event-driven follow-up plus local billing | Patient views, reminders, facility billing and administration |
 
+The detailed functional-module specification, including internal and external
+functions, layered responsibilities, invocation rules, dependency table, and
+architecture-principle mapping is in
+[Functional Modules](functional-modules.md).
+
 ## M1 — Identity & Access
 
 I would separate identity rules from card hardware using **ports and adapters**. A reader translates QR, RFID, NFC or manual input into the same credential lookup. The UPID is an opaque identifier; the card carries a revocable credential, not a clinical record. Duplicate matching produces a *review candidate*, not an automatic merge.
