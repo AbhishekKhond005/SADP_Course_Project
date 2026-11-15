@@ -15,14 +15,14 @@ facility application.
 
 | ID | Module | Description | Main owner |
 | --- | --- | --- | --- |
-| M1 | Identity & Access | Creates and resolves the unified patient identity, authenticates users, and manages card credentials. | Shared identity service |
-| M2 | Trust & Data Exchange | Enforces consent and policy, discovers the facility that owns a record, authorizes exchange, and records the audit trail. | Shared trust service |
-| M3 | Open Ecosystem | Publishes versioned contracts, schemas, SDKs, adapters, conformance tests, and the embedded offline synchronization agent. | Platform/ecosystem team |
-| M4 | Access to Care | Supports registration, card operations, appointment scheduling, and patient check-in. | Facility |
-| M5 | Clinical Care | Supports encounters, clinical documentation, diagnostics, prescriptions, and local clinical records. | Facility |
-| M6 | Engagement & Operations | Provides patient views, reminders, follow-up processing, billing, claims, and facility administration. | Facility |
+| M1 | Patient Identity & Login | Creates a common patient ID, verifies users, and manages patient cards and login details. | Shared identity service |
+| M2 | Consent & Record Sharing | Manages patient permission, finds which hospital has the medical records, allows secure sharing, and keeps track of record access. | Shared trust service |
+| M3 | Platform & Integration | Provides common rules, data formats, tools, and guidelines to help hospitals connect and exchange information. Also supports offline data synchronization. | Platform/ecosystem team |
+| M4 | Registration & Appointments | Handles patient registration, card-related services, appointment booking, and hospital check-in. | Facility |
+| M5 | Medical Services | Handles patient visits, medical records, test reports, diagnoses, prescriptions, and treatment details. | Facility |
+| M6 | Patient Services & Hospital Management | Handles patient information, reminders, follow-ups, billing, insurance claims, and hospital administration. | Facility |
 
-### M1 — Identity & Access
+### M1 — Patient Identity & Login
 
 **Functions**
 
@@ -45,7 +45,7 @@ facility application.
 | Domain | UPID, identity matching, credential status, and revocation rules |
 | Infrastructure | Identity store, card-status store, token provider, and QR/RFID/NFC/manual reader adapters |
 
-### M2 — Trust & Data Exchange
+### M2 — Consent & Record Sharing
 
 **Functions**
 
@@ -71,7 +71,7 @@ facility application.
 | Domain | Consent policy, disclosure rules, trust relationships, record-locator rules |
 | Infrastructure | Consent store, provider directory, record locator, audit log, certificates, and gateway transport |
 
-### M3 — Open Ecosystem
+### M3 — Platform & Integration
 
 **Functions**
 
@@ -98,7 +98,7 @@ M3 is primarily a build-time/platform dependency. Its synchronization agent is
 also a runtime component embedded in M4, M5, and M6 applications. It is not a
 central clinical or billing database.
 
-### M4 — Access to Care
+### M4 — Registration & Appointments
 
 **Functions**
 
@@ -124,7 +124,7 @@ central clinical or billing database.
 | Domain | Slot uniqueness, appointment lifecycle, facility resources, and visit context |
 | Infrastructure | Facility appointment store, M1/M5/M6 clients, reader adapter, and M3 sync agent |
 
-### M5 — Clinical Care
+### M5 — Medical Services
 
 **Functions**
 
@@ -148,7 +148,7 @@ central clinical or billing database.
 | Domain | Clinical record lifecycle, provenance, signing, and care-workflow rules |
 | Infrastructure | Facility clinical store, M1/M2/M4/M6 clients, pharmacy adapter, and M3 sync agent |
 
-### M6 — Engagement & Operations
+### M6 — Patient Services & Hospital Management
 
 **Functions**
 
@@ -286,7 +286,7 @@ not a requirement to force every principle onto every interaction.
 This section explains the role of each module in the complete solution and
 how its responsibilities are separated from the other modules.
 
-### 7.1 M1 — Identity & Access
+### 7.1 M1 — Patient Identity & Login
 
 M1 is the common identity boundary for patients, clinical staff, facility
 administrators, and trusted services. Its most important responsibility is to
@@ -308,7 +308,7 @@ automatically merges identities based only on an uncertain match. Other
 modules receive an identity or authorization decision, not direct access to
 the identity database.
 
-### 7.2 M2 — Trust & Data Exchange
+### 7.2 M2 — Consent & Record Sharing
 
 M2 is the trust boundary for sharing information between facilities. It
 ensures that a request is made by an authenticated caller, concerns the
@@ -330,7 +330,7 @@ location and classification information rather than the detailed clinical
 content. Every denial, unavailable source, and successful disclosure is
 returned explicitly and is recorded for accountability.
 
-### 7.3 M3 — Open Ecosystem
+### 7.3 M3 — Platform & Integration
 
 M3 makes the solution implementable by multiple facilities and vendors. It
 defines the common language between modules: API contracts, message schemas,
@@ -354,7 +354,7 @@ and identity conflicts are sent for review instead of being resolved by
 blind last-write-wins behavior. M3 does not make offline data-sharing or
 card-revocation decisions on behalf of M1 or M2.
 
-### 7.4 M4 — Access to Care
+### 7.4 M4 — Registration & Appointments
 
 M4 is the facility-facing entry point for receiving a patient and arranging a
 visit. It coordinates front-desk activities such as registration, card
@@ -377,7 +377,7 @@ queued request from a confirmed appointment. This prevents an offline user
 interface from promising a booking that the authoritative service has not
 accepted.
 
-### 7.5 M5 — Clinical Care
+### 7.5 M5 — Medical Services
 
 M5 owns the clinical workflow at each facility. It creates and manages
 encounters, worklists, observations, diagnoses, clinical notes, laboratory
@@ -398,7 +398,7 @@ sharing the full clinical note. Local clinical work may continue during a
 network outage, but external history and new cross-facility disclosure remain
 explicitly unavailable until a live trust decision is possible.
 
-### 7.6 M6 — Engagement & Operations
+### 7.6 M6 — Patient Services & Hospital Management
 
 M6 connects the clinical system to patient communication and facility
 operations. It contains the patient dashboard, follow-up rules, reminder
