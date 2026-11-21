@@ -74,7 +74,7 @@ flowchart LR
     M2[M2: resolve UPID / validate caller] --> api
     readers[QR / RFID / NFC / manual] --> adapter[Vendor-neutral reader adapter]
     adapter --> api
-    api --> auth[Authenticate; issue short-lived token]
+    api --> auth["Authenticate; issue short-lived token"]
     api --> matching[Find identity / create opaque UPID]
     matching --> review{Possible duplicate?}
     review -- Yes --> human[Registry human review before merge]
@@ -101,7 +101,7 @@ flowchart LR
     gateway --> policy[Consent policy decision]
     patient[Patient: grant / withdraw consent] --> policy
     policy --> consent[(Consent policies)]
-    gateway --> directory[(Facility/provider directory; code sets)]
+    gateway --> directory[("Facility/provider directory; code sets")]
     gateway --> locator[(Record locator: UPID + category + facility pointer)]
     policy -- "allow / deny" --> gateway
     gateway -- "record decision and access" --> audit[(Independent append-only audit)]
@@ -141,7 +141,7 @@ For booking I would use a **transactional workflow** at the facility: reserve a 
 ```mermaid
 flowchart LR
     patient[Patient / front desk] --> app[Registration and booking UI]
-    app --> M1[M1: resolve UPID; issue / replace / revoke card]
+    app --> M1["M1: resolve UPID; issue / replace / revoke card"]
     app --> slots[Slot and resource service]
     slots --> db[(Facility appointments: unique slot + resource)]
     slots --> booked[Confirmed appointment]
